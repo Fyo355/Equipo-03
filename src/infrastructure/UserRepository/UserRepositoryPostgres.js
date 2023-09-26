@@ -4,7 +4,7 @@ import { User } from "../../domain/models/User.js"
 import { UserPassword } from "../../domain/models/UserPassword.js"
 
 
-export class userRepositoryPostgres extends UserRepository {
+export class UserRepositoryPostgres extends UserRepository {
     constructor() {
         super();
         this.client = new Client({
@@ -14,9 +14,6 @@ export class userRepositoryPostgres extends UserRepository {
             password: "password",
             port: 5432,
         });
-
-
-
     }
 
     async connect() {
@@ -67,13 +64,11 @@ export class userRepositoryPostgres extends UserRepository {
         const query = {
             // give the query a unique name
             name: 'find-user-email',
-            text: 'SELECT * FROM users WHERE email = $1',
+            text: 'SELECT COUNT(1) FROM users WHERE email = $1',
             values: [email],
         }
 
         const res = await this.client.query(query);
-        const savedUser = res.rows[0];
-
-        return Boolean(savedUser)
+        return res.rows[0].count === 1;
     }
 }

@@ -7,8 +7,7 @@ services:
     environment:
       POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "my-project"
-    
+      POSTGRES_DB: "my-project"    
   mongo:
     image: mongo:6.0.7-jammy
     environment:
@@ -16,3 +15,11 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     ports:
       - "27017:27017"
+  redis:
+    image: redis:6.2-alpine
+    ports:
+      - '6379:6379'
+    environment:
+      REDIS_HOST: admin
+      REDIS_PASSWORD: password
+  
