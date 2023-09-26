@@ -1,48 +1,51 @@
-import { User } from "../../domain/models/User.js"
-import { UserPassword } from "../../domain/models/UserPassword.js";
+import { MongoClient } from "mongodb"
 import { UserRepository } from "../../domain/repository/UserRepository.js"
-const { MongoClient } = require('mongodb');
+import { User } from "../../domain/models/User.js"
+import { UserPassword } from "../../domain/models/UserPassword.js"
+
 export class UserRepositoryMongo extends UserRepository {
+  constructor() {
+    super()
+    this.client = new MongoClient("mongodb://admin:password@localhost:27017")
+    this.database = this.client.db("my-project")
+    this.users = this.database.collection("users")
+  }
 
-    constructor() {
-        super()
-        const url = "mongodb://admin:password@localhost:27017"
-        this.client = new MongoClient(url);
-        const db = this.client.db('MiProyecto');
-        this.collection = db.collection('users');
+  async connect() {
+    await this.client.connect()
+  }
+
+  async disconnect() {
+    await this.client.close()
+  }
+
+  async reset() {
+    await this.users.deleteMany({})
+  }
+
+  async save(user) {
+    await this.users.insertOne({ ...user })
+  }
+
+  async findById(id) {
+    const savedUser = await this.users.findOne({ id })
+
+    if (!savedUser) {
+      return null
     }
 
-    async save(user) {
-        await this.collection.insertOne({ ...user });
-    }
+    return new User(
+      savedUser.id,
+      savedUser.name,
+      savedUser.email.email,
+      new UserPassword(savedUser.password.password),
+      savedUser.age.age,
+    )
+  }
 
-    // eslint-disable-next-line no-unused-vars
-    async findById(id) {
+  async existsByEmail(email) {
+    const savedUser = await this.users.findOne({ "email.email": email }, { projection: { _id: 1 } })
 
-        const user = await this.collection.findOne({ id });
-
-        if (user === null) {
-            return null;
-        } //else {
-        return new User(user.id, user.name, user.email.email, new UserPassword(user.password.password), user.age.age)
-        //}
-    }
-
-    // eslint-disable-next-line no-unused-vars
-    async existsByEmail(email) {
-        return await this.collection.findOne({ "email.email": email }) != null;
-    }
-
-    async connect() {
-        this.client.connect();
-    }
-
-    async disconnect() {
-        this.client.close();
-    }
-
-    async reset() {
-        this.collection.deleteMany();
-    }
-
+    return Boolean(savedUser)
+  }
 }

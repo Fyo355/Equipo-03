@@ -1,66 +1,64 @@
-import { describe, it, expect, vi, beforeEach, afterEach, afterAll, beforeAll } from "vitest"
+import { describe, it, expect, beforeEach, beforeAll, afterAll } from "vitest"
+import { UserRepositoryMongo } from "./UserRepositoryMongo.js"
 import { User } from "../../domain/models/User.js"
-import { UserRepositoryMongo } from "./UserRepositoryMongo";
 
 describe("UserRepositoryMongo", () => {
-    //arrange act assert
+  let userRepository
 
-    const userRepository = new UserRepositoryMongo();
+  beforeAll(async () => {
+    userRepository = new UserRepositoryMongo()
+    await userRepository.connect()
+  })
 
-    beforeAll(function () {
-        //userRepository.client.connect();
-        userRepository.connect()
-    })
+  beforeEach(async () => {
+    await userRepository.reset()
+  })
 
-    afterAll(function () {
-        userRepository.close();
-        //userRepository.client.close();
-    })
+  afterAll(async () => {
+    await userRepository.disconnect()
+  })
 
-    beforeEach(function () {
-        //userRepository.collection.deleteMany();
-        userRepository.reset();
-    })
+  it("saves a user in the database", async () => {
+    const id = "00000000-0000-0000-0000-000000000000"
+    const name = "John Doe"
+    const email = "john@email.com"
+    const age = 18
+    const password = "password"
+    const user = User.create(id, name, email, password, age)
 
-    it("should save a user in the mongo db", async () => {
-        const id = "7bdc89d8-6235-46fd-b909-e744823dd45f";
-        const name = "Juan";
-        const email = "juan@email.com";
-        const password = "123456";
-        const age = 18;
-        const user = User.create(id, name, email, password, age);
-        await userRepository.save(user);
+    await userRepository.save(user)
 
-        const userFound = await userRepository.findById(id);
+    const savedUser = await userRepository.findById(id)
+    expect(savedUser).toEqual(user)
+  })
 
-        expect(userFound).toEqual(user);
-    })
+  it("findById returns null if user not found", async () => {
+    const id = "00000000-0000-0000-0000-000000000000"
 
+    const savedUser = await userRepository.findById(id)
 
-    it("should search and not find the user with that id in the mongo db", async () => {
-        const userRepository = new UserRepositoryMongo();
+    expect(savedUser).toEqual(null)
+  })
 
-        const userFound = await userRepository.findById("1234");
+  it("existsByEmail returns true if user is found", async () => {
+    const id = "00000000-0000-0000-0000-000000000000"
+    const name = "John Doe"
+    const email = "john@email.com"
+    const age = 18
+    const password = "password"
+    const user = User.create(id, name, email, password, age)
+    await userRepository.save(user)
 
-        expect(userFound).toBeNull();
-    })
+    const existsUser = await userRepository.existsByEmail(email)
 
+    expect(existsUser).toBe(true)
+  })
 
-    it.only("should search and find the user with that email in the mongo db", async () => {
-        const id = "ddd82d06-25fd-4db7-95ce-5556fc169c06";
-        const name = "pepe";
-        const email = "pepe@email.com";
-        const password = "1234567";
-        const age = 181;
-        const user = User.create(id, name, email, password, age);
-        await userRepository.save(user);
+  it("existsByEmail returns false if user is not found", async () => {
+    const email = "john@email.com"
 
-        const userExists = await userRepository.existsByEmail(email);
+    const existsUser = await userRepository.existsByEmail(email)
 
-        expect(userExists).toBe(true);
-
-    })
-
-
-
-});
+    expect(existsUser).toBe(false)
+  })
+})
