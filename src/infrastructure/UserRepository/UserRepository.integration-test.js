@@ -1,12 +1,16 @@
 import { describe, it, expect, beforeEach, beforeAll, afterAll } from "vitest"
 import { UserRepositoryMongo } from "./UserRepositoryMongo.js"
 import { User } from "../../domain/models/User.js"
+import { UserRepositoryPostgresSQL } from "./UserRepositoryPostgresSQL.js"
 
-describe("UserRepositoryMongo", () => {
+describe.each([
+  ["Mongo", UserRepositoryMongo],
+  ["PostgresSQL", UserRepositoryPostgresSQL],
+])("UserRepository%s", (name, UserRepository) => {
   let userRepository
 
   beforeAll(async () => {
-    userRepository = new UserRepositoryMongo()
+    userRepository = new UserRepository()
     await userRepository.connect()
   })
 
@@ -18,7 +22,7 @@ describe("UserRepositoryMongo", () => {
     await userRepository.disconnect()
   })
 
-  it.skip("saves a user in the database", async () => {
+  it("saves a user in the database", async () => {
     const id = "00000000-0000-0000-0000-000000000000"
     const name = "John Doe"
     const email = "john@email.com"
@@ -32,7 +36,7 @@ describe("UserRepositoryMongo", () => {
     expect(savedUser).toEqual(user)
   })
 
-  it.skip("findById returns null if user not found", async () => {
+  it("findById returns null if user not found", async () => {
     const id = "00000000-0000-0000-0000-000000000000"
 
     const savedUser = await userRepository.findById(id)
@@ -40,7 +44,7 @@ describe("UserRepositoryMongo", () => {
     expect(savedUser).toEqual(null)
   })
 
-  it.skip("existsByEmail returns true if user is found", async () => {
+  it("existsByEmail returns true if user is found", async () => {
     const id = "00000000-0000-0000-0000-000000000000"
     const name = "John Doe"
     const email = "john@email.com"
@@ -54,7 +58,7 @@ describe("UserRepositoryMongo", () => {
     expect(existsUser).toBe(true)
   })
 
-  it.skip("existsByEmail returns false if user is not found", async () => {
+  it("existsByEmail returns false if user is not found", async () => {
     const email = "john@email.com"
 
     const existsUser = await userRepository.existsByEmail(email)
