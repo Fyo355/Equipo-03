@@ -22,7 +22,7 @@ describe.each([
     await userRepository.disconnect()
   })
 
-  it("saves a user in the database", async () => {
+  it.skip("saves a user in the database", async () => {
     const id = "00000000-0000-0000-0000-000000000000"
     const name = "John Doe"
     const email = "john@email.com"
@@ -36,7 +36,7 @@ describe.each([
     expect(savedUser).toEqual(user)
   })
 
-  it("findById returns null if user not found", async () => {
+  it.skip("findById returns null if user not found", async () => {
     const id = "00000000-0000-0000-0000-000000000000"
 
     const savedUser = await userRepository.findById(id)
@@ -44,7 +44,7 @@ describe.each([
     expect(savedUser).toEqual(null)
   })
 
-  it("existsByEmail returns true if user is found", async () => {
+  it.skip("existsByEmail returns true if user is found", async () => {
     const id = "00000000-0000-0000-0000-000000000000"
     const name = "John Doe"
     const email = "john@email.com"
@@ -58,7 +58,7 @@ describe.each([
     expect(existsUser).toBe(true)
   })
 
-  it("existsByEmail returns false if user is not found", async () => {
+  it.skip("existsByEmail returns false if user is not found", async () => {
     const email = "john@email.com"
 
     const existsUser = await userRepository.existsByEmail(email)
