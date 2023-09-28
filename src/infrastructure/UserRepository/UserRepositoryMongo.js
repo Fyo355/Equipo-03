@@ -2,11 +2,21 @@ import { MongoClient } from "mongodb"
 import { UserRepository } from "../../domain/repository/UserRepository.js"
 import { User } from "../../domain/models/User.js"
 import { UserPassword } from "../../domain/models/UserPassword.js"
+import { configKeys } from "../Shared/ConfigKeys.js"
 
 export class UserRepositoryMongo extends UserRepository {
-  constructor() {
+  constructor({
+    user = configKeys.mongo.user,
+    password = configKeys.mongo.password,
+    url = configKeys.mongo.url,
+    port = configKeys.mongo.port,
+  } = {}) {
     super()
-    this.client = new MongoClient("mongodb://admin:password@localhost:27017")
+    this.user = user
+    this.password = password
+    this.url = url
+    this.port = port
+    this.client = new MongoClient(`mongodb://${this.user}:${this.password}@${this.url}:${this.port}`)
     this.database = this.client.db("my-project")
     this.users = this.database.collection("users")
   }

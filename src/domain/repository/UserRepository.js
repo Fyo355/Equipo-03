@@ -4,7 +4,7 @@ export class UserRepository {
    * @param {User} user
    * @returns {Promise<void>}
    */
-  async save(user) {
+  async save() {
     throw new Error("This is an abstract class. You should implement the save method")
   }
 
@@ -13,7 +13,7 @@ export class UserRepository {
    * @param {string} id
    * @returns {Promise<User | null>}
    */
-  async findById(id) {
+  async findById() {
     throw new Error("This is an abstract class. You should implement the findById method")
   }
 
@@ -22,7 +22,7 @@ export class UserRepository {
    * @param {string} email
    * @returns {Promise<boolean>}
    */
-  async existsByEmail(email) {
+  async existsByEmail() {
     throw new Error("This is an abstract class. You should implement the existsByEmail method")
   }
 }

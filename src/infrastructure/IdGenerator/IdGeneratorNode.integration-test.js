@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest"
-import { IdGeneratorNode } from "./IdGeneratorNode.js";
+import { IdGeneratorNode } from "./IdGeneratorNode.js"
 
 describe("IdGeneratorNode", () => {
-  it.skip("generates a different identifier each time", () => {
+  it("generates a different identifier each time", () => {
     const idGenerator = new IdGeneratorNode()
 
     const id1 = idGenerator.generate()
