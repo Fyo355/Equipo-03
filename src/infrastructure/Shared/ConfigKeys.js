@@ -2,7 +2,7 @@ import "dotenv/config"
 
 export const configKeys = {
   mailgun: {
-    domain: "sandboxc9c2dc269da1431d8c236271fd734661.mailgun.org",
+    domain: "sandboxc2c041ddf3e34f7eafb0c73e84f1d2e7.mailgun.org",
     authUser: "api",
     APIKey: process.env.MAILGUN_API_KEY,
   },

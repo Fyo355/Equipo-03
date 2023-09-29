@@ -20,7 +20,6 @@ export class EmailSenderMailgun extends EmailSender {
     var formdata = new FormData()
 
     formdata.append("from", `Juanma <mailgun@${this.domain}>`)
-    //formdata.append("to", "juanandma@disroot.org");
     formdata.append("to", user.email.email)
     formdata.append("subject", "Hello")
     formdata.append("text", `¡Bienvenido a Mi proyecto ${user.name}!`)
