@@ -4,7 +4,7 @@ import { User } from "../../domain/models/User.js"
 import { TestInbox } from "./TestInbox.js"
 
 describe("EmailSenderMailgun", () => {
-  it("sends the welcome email to a user", async () => {
+  it("sends the welcome email to a user. Now it should pass", async () => {
     const emailSender = new EmailSenderMailgun()
     const testInbox = new TestInbox()
     const id = "00000000-0000-0000-0000-000000000000"
