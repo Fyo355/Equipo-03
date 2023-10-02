@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from "vitest"
 import { ApiControllerRegisterUser } from "./ApiControllerRegisterUser.js"
+import { RegisterUser } from "../../application/RegisterUser.js"
 
 describe("ApiControllerRegisterUser", () => {
   it("should call registerUser.execute when the user is recived", async () => {

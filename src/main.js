@@ -18,6 +18,11 @@ const miApi = new ApiControllerRegisterUser(registerUser)
 
 app.use(express.json())
 
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send("Something broke!")
+})
+
 app.post("/register", miApi.execute)
 
 app.listen(port, () => {
