@@ -1,11 +1,10 @@
 import { sleep } from "../../domain/utils/sleep.js"
-import { configKeys } from "../Shared/ConfigKeys.js"
+import { config } from "../Shared/config.js"
 
 export class TestInbox {
-  constructor({ APIKey = configKeys.testInbox.APIKey, namespace = configKeys.testInbox.namespace } = {}) {
-    this.APIKey = APIKey
+  constructor({ apiKey = config.testInbox.apiKey, namespace = config.testInbox.namespace } = {}) {
+    this.apiKey = apiKey
     this.namespace = namespace
-    this.messages = []
   }
 
   /**
@@ -15,9 +14,8 @@ export class TestInbox {
    */
   async getEmails(from) {
     const params = new URLSearchParams({
-      apikey: this.APIKey,
+      apikey: this.apiKey,
       namespace: this.namespace,
-      pretty: true,
       timestamp_from: from.getTime(),
     })
 
@@ -35,7 +33,8 @@ export class TestInbox {
   }
 
   async getLastEmail() {
-    for (;;) {
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
       const emails = await this.getEmailsInLast5Seconds()
       if (emails.length > 0) {
         return emails[0]

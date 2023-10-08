@@ -4,12 +4,12 @@ import { User } from "../../domain/models/User.js"
 import { TestInbox } from "./TestInbox.js"
 
 describe("EmailSenderMailgun", () => {
-  it("sends the welcome email to a user. Now it should pass", async () => {
+  it("sends the welcome email to a user", async () => {
     const emailSender = new EmailSenderMailgun()
     const testInbox = new TestInbox()
     const id = "00000000-0000-0000-0000-000000000000"
     const name = "John Doe"
-    const email = "gp29h.test@inbox.testmail.app "
+    const email = " 9eqfr.test@inbox.testmail.app"
     const age = 18
     const password = "password"
     const user = User.create(id, name, email, password, age)
@@ -17,26 +17,26 @@ describe("EmailSenderMailgun", () => {
     await emailSender.sendWelcomeEmail(user)
 
     const receivedEmail = await testInbox.getLastEmail()
-    expect(receivedEmail.text).toMatch("¡Bienvenido a Mi proyecto John Doe!")
+    expect(receivedEmail.html).toMatch("¡Bienvenido a Mi proyecto John Doe!")
   }, 10_000)
 
-  it.skip("throws an error if email is invalid", async () => {
+  it("throws an error if email is invalid", async () => {
     const emailSender = new EmailSenderMailgun()
     const invalidEmail = "@"
     const user = createUser({ email: invalidEmail })
 
-    const result = await emailSender.sendWelcomeEmail(user)
+    const result = emailSender.sendWelcomeEmail(user)
 
     expect(result).rejects.toThrow("to parameter is not a valid address. please check documentation")
   })
 
-  it.skip("throws an error if credentials are invalid", async () => {
+  it("throws an error if credentials are invalid", async () => {
     const emailSender = new EmailSenderMailgun({
       apiKey: "invalid",
     })
     const notImportantUser = createUser()
 
-    const result = await emailSender.sendWelcomeEmail(notImportantUser)
+    const result = emailSender.sendWelcomeEmail(notImportantUser)
 
     expect(result).rejects.toThrow("Invalid API key")
   })
