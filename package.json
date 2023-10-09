@@ -16,12 +16,9 @@
     "test:integration": "vitest --run --config vite.config.integration.js",
     "test:unit": "vitest --run --config vite.config.unit.js",
     "test:coverage": "vitest --coverage",
-    "lint:fix": "eslint . --fix",
-    "lint:check": "eslint .",
     "format:fix": "prettier --write .",
     "format:check": "prettier --check .",
-    "migrate": "node src/infrastructure/Shared/migrations/run.js",
-    "prepare": "husky install"
+    "migrate": "node src/infrastructure/Shared/migrations/run.js"
   },
   "repository": {
     "type": "git",
