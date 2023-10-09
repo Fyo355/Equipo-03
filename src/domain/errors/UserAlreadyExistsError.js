@@ -1,5 +1,7 @@
-export class UserAlreadyExistsError extends Error {
+import { ErrorCode } from "./ErrorCode.js"
+import { DomainError } from "./DomainError.js"
+export class UserAlreadyExistsError extends DomainError {
   constructor() {
-    super("User already exists")
+    super(ErrorCode.User_Already_Exists, "User already exists")
   }
 }

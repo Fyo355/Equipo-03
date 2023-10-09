@@ -1,5 +1,5 @@
 import crypto from "node:crypto"
-
+import { UserPasswordLengthError } from "../errors/UserPasswordLengthError.js"
 export class UserPassword {
   static fromPlain(plainPassword) {
     if (plainPassword.length < 6) {

@@ -4,6 +4,7 @@ import { RegisterUser } from "./RegisterUser.js"
 import { User } from "../domain/models/User.js"
 import { IdGeneratorMock } from "../infrastructure/IdGenerator/IdGeneratorMock.js"
 import { EmailSenderMock } from "../infrastructure/EmailSender/EmailSenderMock.js"
+import { UserAlreadyExistsError } from "../domain/errors/UserAlreadyExistsError.js"
 
 describe("RegisterUser", () => {
   let userRepository
@@ -47,7 +48,7 @@ describe("RegisterUser", () => {
 
     const result = registerUser.execute(notImportantName, notImportantEmail, notImportantPassword, notImportantAge)
 
-    expect(result).rejects.toThrow("User already exists")
+    expect(result).rejects.toThrow(UserAlreadyExistsError)
   })
 
   it("sends a welcome email to the user", async () => {

@@ -1,4 +1,5 @@
 import { User } from "../domain/models/User.js"
+import { UserAlreadyExistsError } from "../domain/errors/UserAlreadyExistsError.js"
 
 export class RegisterUser {
   /**

@@ -1,5 +1,7 @@
-export class UserIsNotAdultError extends Error {
+import { ErrorCode } from "./ErrorCode.js"
+import { DomainError } from "./DomainError.js"
+export class UserIsNotAdultError extends DomainError {
   constructor() {
-    super("User must be 18 or older")
+    super(ErrorCode.UserIsNotAdultError, "User must be 18 or older")
   }
 }

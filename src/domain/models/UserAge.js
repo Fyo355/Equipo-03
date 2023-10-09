@@ -1,3 +1,4 @@
+import { UserIsNotAdultError } from "../errors/UserIsNotAdultError.js"
 export class UserAge {
   constructor(age) {
     this.age = age
