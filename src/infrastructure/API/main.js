@@ -16,6 +16,16 @@ const emailSender = new EmailSenderMock()
 const registerUser = new RegisterUser(userRepository, idGenerator, emailSender)
 const postUserController = new PostUserController(registerUser)
 
+app.use((err, req, res, next) => {
+  try {
+    next(req, res)
+  } catch (error) {
+    if (error instanceof UserAlreadyExistsError) {
+      res.status(400).json({ error })
+    }
+  }
+})
+
 app.post("/users/register", postUserController.execute)
 
 app.listen(port, () => {

@@ -3,7 +3,7 @@ export class UserAge {
     this.age = age
 
     if (age < 18) {
-      throw new Error("User must be 18 or older")
+      throw new UserIsNotAdultError()
     }
   }
 

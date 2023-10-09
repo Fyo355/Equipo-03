@@ -3,7 +3,7 @@ export class UserEmail {
     this.email = email
 
     if (!this.email.includes("@")) {
-      throw new Error("Invalid email")
+      throw new UserEmailInvalidError()
     }
   }
 
