@@ -3,6 +3,6 @@ import { DomainError } from "./DomainError.js"
 
 export class InvalidEmailError extends DomainError {
   constructor() {
-    super(ErrorCode.Invalid_Email, "Invalid email")
+    super(ErrorCode.INVALID_EMAIL, "Invalid email")
   }
 }

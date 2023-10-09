@@ -1,12 +1,14 @@
-import { ErrorCode } from "../../domain/errors/ErrorCode"
+import { ErrorCode } from "../../domain/errors/ErrorCode.js"
 
 export const ErrorCodeMapStatus = new Map()
 
-ErrorCodeMapStatus.set(ErrorCode.User_Already_Exists, 400)
-ErrorCodeMapStatus.set(ErrorCode.Invalid_Email, 400)
-ErrorCodeMapStatus.set(ErrorCode.User_Is_Not_Adult, 400)
-ErrorCodeMapStatus.set(ErrorCode.User_Password_Length, 400)
+ErrorCodeMapStatus.set(ErrorCode.USER_ALREADY_EXISTS, 400)
+ErrorCodeMapStatus.set(ErrorCode.INVALID_EMAIL, 400)
+ErrorCodeMapStatus.set(ErrorCode.USER_IS_NOT_ADULT, 400)
+ErrorCodeMapStatus.set(ErrorCode.USER_PASSWORD_LENGTH, 400)
+ErrorCodeMapStatus.set(ErrorCode.INVALID_PARAMS, 400)
 
 export function errorCodeStatus(code) {
-  return ErrorCodeMapStatus.get(code)
+  console.log(code)
+  return ErrorCodeMapStatus.get(code) ?? 500
 }

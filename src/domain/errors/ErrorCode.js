@@ -1,7 +1,8 @@
 export const ErrorCode = {
-  User_Already_Exists: "User already exists",
-  Invalid_Email: "Invalid email",
-  User_Is_Not_Adult: "User must be 18 or older",
-  User_Password_Length: "Password must be 6 characters or longer",
-  Invalid_Api_Key: "Invalid API key",
+  USER_ALREADY_EXISTS: "USER_ALREADY_EXISTS",
+  INVALID_EMAIL: "INVALID_EMAIL",
+  USER_IS_NOT_ADULT: "USER_MUST_BE_18_OR_OLDER",
+  USER_PASSWORD_LENGTH: "PASSWORD_MUST_BE_6_CHARACTERS_OR_LONGER",
+  INVALID_API_KEY: "INVALID_API_KEY",
+  INVALID_PARAMS: "INVALID_PARAMS",
 }

@@ -2,24 +2,24 @@ import "dotenv/config"
 
 export const config = {
   mailgun: {
-    domain: "sandbox261f754ab73b43388177e85a621a13fb.mailgun.org",
+    domain: "sandboxc2c041ddf3e34f7eafb0c73e84f1d2e7.mailgun.org",
     authUser: "api",
-    apiKey: process.env.MAILGUN_API_KEY,
+    APIKey: process.env.MAILGUN_API_KEY,
   },
   testInbox: {
-    namespace: "9eqfr",
-    apiKey: process.env.TESTMAIL_API_KEY,
+    APIKey: process.env.TESTMAIL_API_KEY,
+    namespace: "gp29h",
+  },
+  mongo: {
+    user: "admin",
+    password: "password",
+    url: "localhost",
+    port: "27017",
   },
   postgres: {
     user: "admin",
     host: "localhost",
     database: "my-project",
-    password: process.env.POSTGRES_PASSWORD || "password",
-  },
-  mongo: {
-    user: "admin",
-    password: process.env.MONGO_PASSWORD || "password",
-    address: "localhost",
-    port: "27017",
+    password: "password",
   },
 }
