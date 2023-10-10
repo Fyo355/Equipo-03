@@ -6,7 +6,7 @@ export class EmailSenderMailgun extends EmailSender {
   constructor({
     domain = config.mailgun.domain,
     authUser = config.mailgun.authUser,
-    apiKey = config.mailgun.apiKey,
+    apiKey = config.mailgun.APIKey,
   } = {}) {
     super()
     this.domain = domain

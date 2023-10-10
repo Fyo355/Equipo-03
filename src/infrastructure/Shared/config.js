@@ -13,7 +13,7 @@ export const config = {
   mongo: {
     user: "admin",
     password: "password",
-    url: "localhost",
+    address: "localhost",
     port: "27017",
   },
   postgres: {
