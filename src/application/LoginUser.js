@@ -3,5 +3,8 @@ export class LoginUser {
     this.loginUser = loginUser
   }
 
-  async execute(email, password) {}
+  async execute(email, password) {
+    const token = ""
+    return token
+  }
 }

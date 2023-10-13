@@ -1,17 +1,28 @@
-import { describe, it, expect, vi } from "vitest"
+import { describe, it, expect, vi, beforeEach } from "vitest"
 import { PostUserController } from "./PostUserController.js"
 import { ZodError } from "zod"
+import { UserPepe } from "../../../domain/mother/UserPepe.js"
 
 describe("PostUserController", () => {
   let json
   let res
+  let registerUser
+  let postUserController
+  const name = UserPepe.name
+  const email = UserPepe.email
+  const password = UserPepe.password
+  const age = UserPepe.age
+
+  beforeEach(() => {
+    registerUser = { execute: vi.fn() }
+    postUserController = new PostUserController(registerUser)
+    json = vi.fn()
+    res = {
+      status: vi.fn(() => ({ json })),
+    }
+  })
+
   it("invokes the use case", async () => {
-    const registerUser = { execute: vi.fn() }
-    const postUserController = new PostUserController(registerUser)
-    const name = "John Doe"
-    const email = "johndoe@example.com"
-    const password = "password"
-    const age = 18
     const req = {
       body: {
         name,
@@ -19,10 +30,6 @@ describe("PostUserController", () => {
         password,
         age,
       },
-    }
-    json = vi.fn()
-    res = {
-      status: vi.fn(() => ({ json })),
     }
 
     await postUserController.execute(req, res)
@@ -31,12 +38,6 @@ describe("PostUserController", () => {
   })
 
   it("responds with status 201", async () => {
-    const registerUser = { execute: vi.fn() }
-    const postUserController = new PostUserController(registerUser)
-    const name = "John Doe"
-    const email = "johndoe@example.com"
-    const password = "password"
-    const age = 18
     const req = {
       body: {
         name,
@@ -45,10 +46,6 @@ describe("PostUserController", () => {
         age,
       },
     }
-    json = vi.fn()
-    res = {
-      status: vi.fn(() => ({ json })),
-    }
 
     await postUserController.execute(req, res)
 
@@ -56,21 +53,12 @@ describe("PostUserController", () => {
   })
 
   it("should return an error when the user has invalid parameters", async () => {
-    const registerUser = { execute: vi.fn() }
-    const postUserController = new PostUserController(registerUser)
-    const email = "johndoe@example.com"
-    const password = "password"
-    const age = 18
     const req = {
       body: {
         email,
         password,
         age,
       },
-    }
-    json = vi.fn()
-    res = {
-      status: vi.fn(() => ({ json })),
     }
 
     const result = postUserController.execute(req, res)
