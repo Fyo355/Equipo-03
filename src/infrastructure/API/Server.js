@@ -5,7 +5,8 @@ import { IdGeneratorNode } from "../IdGenerator/IdGeneratorNode.js"
 import { EmailSenderMock } from "../EmailSender/EmailSenderMock.js"
 import { PostUserController } from "./Controllers/PostUserController.js"
 import { handleError } from "./Middleware/handleError.js"
-
+import { PostLoginUserController } from "./Controllers/PostLoginUserController.js"
+import { LoginUser } from "../../application/LoginUser.js"
 export class Server {
   constructor(dependecies = {}) {
     this.dependecies = this.createDependencies(dependecies)
@@ -13,6 +14,7 @@ export class Server {
     this.app = express()
     this.app.use(express.json())
     this.app.post("/users/register", this.dependecies.postUserController.execute)
+    this.app.post("/users/login", this.dependecies.postLoginUserController.execute)
     this.app.use(handleError)
   }
 
@@ -22,6 +24,8 @@ export class Server {
     emailSender = new EmailSenderMock(),
     registerUser = new RegisterUser(userRepository, idGenerator, emailSender),
     postUserController = new PostUserController(registerUser),
+    loginUser = new LoginUser(),
+    postLoginUserController = new PostLoginUserController(loginUser),
   }) {
     return {
       userRepository,
@@ -29,6 +33,7 @@ export class Server {
       emailSender,
       registerUser,
       postUserController,
+      postLoginUserController,
     }
   }
 

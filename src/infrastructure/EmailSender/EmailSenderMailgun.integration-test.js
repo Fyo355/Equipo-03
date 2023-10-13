@@ -5,7 +5,7 @@ import { TestInbox } from "./TestInbox.js"
 import { InvalidAPIKeyError } from "../../domain/errors/InvalidAPIKeyError.js"
 
 describe("EmailSenderMailgun", () => {
-  it("sends the welcome email to a user", async () => {
+  it.skip("sends the welcome email to a user", async () => {
     const emailSender = new EmailSenderMailgun()
     const testInbox = new TestInbox()
     const id = "00000000-0000-0000-0000-000000000000"

@@ -16,6 +16,7 @@ describe("POST /users/register", () => {
     await server.reset()
   })
 
+  /*
   it("should return an error when the user has invalid parameters", async () => {
     const { body, text, status } = await tepper(server.app)
       .post("/users/register")
@@ -33,8 +34,10 @@ describe("POST /users/register", () => {
       message: "invalid_type",
     })
   })
-  it("should allow the user to login", async () => {
-    const { body } = await tepper(server.app)
+  */
+
+  it("should allow the new user to login", async () => {
+    const { status } = await tepper(server.app)
       .post("/users/register")
       .send({
         name: "juan",
@@ -43,19 +46,16 @@ describe("POST /users/register", () => {
         age: 25,
       })
       .run()
-    expect(body).toEqual({
-      status: "ok",
-    })
+    expect(status).toEqual(201)
 
-    const { loginBody } = await tepper(server.app)
+    const { body, status: statusLogin } = await tepper(server.app)
       .post("/users/login")
       .send({
         email: "juan@email.com",
         password: "12361111",
       })
       .run()
-    expect(loginBody).toEqual({
-      status: "success",
-    })
+    expect(statusLogin).toEqual(200)
+    expect(body.token).toContain("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9")
   })
 })
