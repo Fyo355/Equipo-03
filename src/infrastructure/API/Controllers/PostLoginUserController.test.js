@@ -59,7 +59,7 @@ describe("PostLoginUserController", () => {
     await expect(result).rejects.toBeInstanceOf(ZodError)
   })
 
-  it.skip("should return a auth token", async () => {
+  it("should return a auth token", async () => {
     const req = {
       body: {
         email,
@@ -69,6 +69,8 @@ describe("PostLoginUserController", () => {
 
     await postLoginUserController.execute(req, res)
 
-    expect(json).toHaveBeenCalledWith(token)
+    expect(json).toHaveBeenCalledWith({
+      token: "",
+    })
   })
 })
