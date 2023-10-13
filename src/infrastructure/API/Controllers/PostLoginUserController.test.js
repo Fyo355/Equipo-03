@@ -43,6 +43,6 @@ describe("PostLoginUserController", () => {
 
     await postLoginUserController.execute(req, res)
 
-    expect(res.status).toHaveBeenCalledWith(201)
+    expect(res.status).toHaveBeenCalledWith(200)
   })
 })

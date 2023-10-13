@@ -1,3 +1,7 @@
 export class LoginUser {
-  constructor() {}
+  constructor(loginUser) {
+    this.loginUser = loginUser
+  }
+
+  async execute(email, password) {}
 }

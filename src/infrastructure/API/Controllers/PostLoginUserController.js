@@ -14,6 +14,6 @@ export class PostLoginUserController {
     const { email, password } = schema.parse(req.body)
     const token = await this.loginUser.execute(email, password)
 
-    res.status(201).json({ token })
+    res.status(200).json({ token })
   }
 }
